@@ -30,8 +30,10 @@ async function getProfileData() {
     const supabase = await createClient();
 
     // For demo purposes, we fetch the first profile.
-    // In a real app with subdomains/params, you'd fetch by username
-    const { data: profile } = await supabase.from('profiles').select('*').limit(1).single();
+    // We add a 3 second timeout in case the Supabase free tier database is sleeping or the server internet is slow
+    const profilePromise = supabase.from('profiles').select('*').limit(1).single();
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timeout")), 3500));
+    const { data: profile } = (await Promise.race([profilePromise, timeoutPromise])) as any;
 
     if (!profile) {
       throw new Error("No profile found - reverting to mock data");
@@ -107,6 +109,8 @@ export default async function Home() {
               width={112}
               height={112}
               className="w-full h-full object-cover rounded-full border-4 border-white dark:border-gray-800 shadow-xl"
+              priority
+              unoptimized
             />
             <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full shadow-inner animate-pulse"></span>
           </div>
