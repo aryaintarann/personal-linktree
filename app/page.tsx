@@ -30,9 +30,9 @@ async function getProfileData() {
     const supabase = await createClient();
 
     // For demo purposes, we fetch the first profile.
-    // We add a 3 second timeout in case the Supabase free tier database is sleeping or the server internet is slow
+    // We add a 15 second timeout in case the Supabase free tier database is sleeping or the server internet is slow
     const profilePromise = supabase.from('profiles').select('*').limit(1).single();
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timeout")), 3500));
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timeout")), 15000));
     const { data: profile } = (await Promise.race([profilePromise, timeoutPromise])) as any;
 
     if (!profile) {
