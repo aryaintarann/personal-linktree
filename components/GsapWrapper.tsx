@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register ScrollTrigger
+
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
@@ -14,7 +14,6 @@ export default function GsapWrapper({ children }: { children: React.ReactNode })
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            // We use GSAP timeline for entrance to stagger everything beautifully
             const tl = gsap.timeline();
 
             tl.fromTo(
@@ -41,7 +40,6 @@ export default function GsapWrapper({ children }: { children: React.ReactNode })
                     "-=0.2"
                 );
 
-            // Example Parallax for background or specific elements if scrolling happen
             gsap.utils.toArray(".parallax-bg").forEach((layer: any) => {
                 const depth = layer.dataset.depth || 0.2;
                 gsap.to(layer, {

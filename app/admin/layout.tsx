@@ -12,7 +12,6 @@ export default async function AdminLayout({
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col md:flex-row font-sans">
-            {/* Sidebar for Desktop / Topbar for Mobile */}
             {user && (
                 <aside className="w-full md:w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col">
                     <div className="flex items-center gap-3 mb-8">
@@ -39,7 +38,6 @@ export default async function AdminLayout({
                 </aside>
             )}
 
-            {/* Main Content */}
             <main className="flex-1 p-6 md:p-10 overflow-auto">
                 {children}
             </main>

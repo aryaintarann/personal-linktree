@@ -11,15 +11,12 @@ interface LinkItem {
 }
 
 export default function LinkCard({ link }: { link: LinkItem }) {
-    // Dynamically resolve icon, fallback to Link icon if not found
     const IconComponent = link.icon_name && (LucideIcons as any)[link.icon_name]
         ? (LucideIcons as any)[link.icon_name]
         : LucideIcons.Link2;
-
-    // Render a custom color or default theme
     const getIconStyles = () => {
         if (link.icon_color) {
-            return { color: link.icon_color, backgroundColor: `${link.icon_color}20` }; // 20 adds some transparency in hex, but better approach is tailwind style.
+            return { color: link.icon_color, backgroundColor: `${link.icon_color}20` };
         }
         return {};
     };
@@ -35,7 +32,6 @@ export default function LinkCard({ link }: { link: LinkItem }) {
                 <div
                     className="w-12 h-12 rounded-full flex items-center justify-center transition-transform group-hover:scale-110"
                     style={link.icon_color ? getIconStyles() : {}}
-                    // Default colors if no custom color provided
                     {...(!link.icon_color && { className: "w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 transition-transform group-hover:scale-110" })}
                 >
                     <IconComponent className="w-6 h-6" />

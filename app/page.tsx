@@ -23,48 +23,23 @@ import {
   BookOpen
 } from "lucide-react";
 
-export const revalidate = 60; // revalidate every 60s
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 async function getProfileData() {
-  try {
-    const supabase = await createClient();
+  const supabase = await createClient();
+  const profilePromise = supabase.from('profiles').select('*').limit(1).single();
+  const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timeout")), 15000));
+  const { data: profile } = (await Promise.race([profilePromise, timeoutPromise])) as any;
 
-    // For demo purposes, we fetch the first profile.
-    // We add a 15 second timeout in case the Supabase free tier database is sleeping or the server internet is slow
-    const profilePromise = supabase.from('profiles').select('*').limit(1).single();
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Database connection timeout")), 15000));
-    const { data: profile } = (await Promise.race([profilePromise, timeoutPromise])) as any;
-
-    if (!profile) {
-      throw new Error("No profile found - reverting to mock data");
-    }
-
-    const { data: links } = await supabase.from('links').select('*').eq('user_id', profile.id).order('order_index', { ascending: true });
-    const { data: socials } = await supabase.from('socials').select('*').eq('user_id', profile.id).order('order_index', { ascending: true });
-
-    return { profile, links: links || [], socials: socials || [] };
-  } catch (e) {
-    // Graceful fallback to Mock Data if DB isn't connected yet (match index.html)
-    return {
-      profile: {
-        full_name: "Budi Santoso",
-        bio: "Desainer Produk & Pengembang Web. Membantu bisnis tumbuh melalui desain digital yang luar biasa.",
-        avatar_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
-      },
-      links: [
-        { id: "1", title: "Portofolio Pribadi", subtitle: "Lihat hasil karya terbaru saya", url: "#", icon_name: "Briefcase" },
-        { id: "2", title: "LinkedIn", subtitle: "Mari terhubung secara profesional", url: "#", icon_name: "Linkedin", icon_color: "#0077b5" },
-        { id: "3", title: "GitHub", subtitle: "Kode dan proyek open source", url: "#", icon_name: "Github" },
-        { id: "4", title: "Hubungi Saya", subtitle: "Konsultasi via WhatsApp", url: "#", icon_name: "MessageCircle", icon_color: "#22c55e" }
-      ],
-      socials: [
-        { id: "1", platform: "Instagram", url: "#" },
-        { id: "2", platform: "Twitter", url: "#" },
-        { id: "3", platform: "Facebook", url: "#" },
-        { id: "4", platform: "Youtube", url: "#" }
-      ]
-    };
+  if (!profile) {
+    throw new Error("No profile found - reverting to mock data");
   }
+
+  const { data: links } = await supabase.from('links').select('*').eq('user_id', profile.id).order('order_index', { ascending: true });
+  const { data: socials } = await supabase.from('socials').select('*').eq('user_id', profile.id).order('order_index', { ascending: true });
+
+  return { profile, links: links || [], socials: socials || [] };
 }
 
 const SocialIconComponent = ({ platform, url }: { platform: string, url: string }) => {
@@ -100,7 +75,6 @@ export default async function Home() {
       <GsapWrapper>
         <ThemeShareButtons />
 
-        {/* Profile Header */}
         <header className="animate-header flex flex-col items-center mb-10 w-full mt-8">
           <div className="relative w-28 h-28 mb-4">
             <Image
@@ -122,21 +96,18 @@ export default async function Home() {
           </p>
         </header>
 
-        {/* Link List */}
         <div className="w-full flex flex-col gap-4 mb-10">
           {links.map((link: any) => (
             <LinkCard key={link.id} link={link} />
           ))}
         </div>
 
-        {/* Social Icons */}
         <div className="animate-bottom flex gap-6 mb-12">
           {socials.map((social: any) => (
             <SocialIconComponent key={social.id} platform={social.platform} url={social.url} />
           ))}
         </div>
 
-        {/* Footer */}
         <footer className="animate-bottom mt-auto pb-4 text-center text-xs text-gray-400">
           <p>
             &copy; {currentYear} {profile.full_name}.
