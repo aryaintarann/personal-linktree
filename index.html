@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tautan Profil Pribadi</title>
+
+    <!-- Tailwind CSS untuk Styling Modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Konfigurasi Tailwind untuk Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Animasi masuk (Fade in up) */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Penundaan animasi untuk setiap tautan agar muncul bergantian */
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+
+        .delay-400 {
+            animation-delay: 400ms;
+        }
+
+        .delay-500 {
+            animation-delay: 500ms;
+        }
+
+        /* Menyembunyikan elemen sebelum animasi berjalan */
+        .link-card {
+            opacity: 0;
+        }
+
+        /* Toast Notifikasi Custom */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: visibility 0.5s, opacity 0.5s linear;
+            opacity: 0;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex justify-center selection:bg-blue-200 selection:text-blue-900 font-sans">
+
+    <!-- Container Utama -->
+    <main class="w-full max-w-md px-6 py-12 relative flex flex-col items-center">
+
+        <!-- Tombol Aksi di Kanan Atas (Theme & Share) -->
+        <div class="absolute top-6 right-6 flex gap-3">
+            <!-- Tombol Mode Gelap/Terang -->
+            <button id="theme-toggle"
+                class="w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fa-solid fa-moon text-lg" id="theme-icon"></i>
+            </button>
+
+            <!-- Tombol Bagikan -->
+            <button id="share-btn"
+                class="w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fa-solid fa-arrow-up-from-bracket text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Bagian Profil -->
+        <header class="flex flex-col items-center mb-10 w-full animate-fade-in-up">
+            <!-- Foto Profil (Ganti URL gambar dengan foto Anda) -->
+            <div class="relative w-28 h-28 mb-4">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80"
+                    alt="Foto Profil"
+                    class="w-full h-full object-cover rounded-full border-4 border-white dark:border-gray-800 shadow-lg"
+                    onerror="this.src='https://via.placeholder.com/150?text=Profil'">
+                <!-- Badge Status Aktif -->
+                <span
+                    class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></span>
+            </div>
+
+            <h1 class="text-2xl font-bold mb-2 tracking-tight">Budi Santoso</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 text-center max-w-[280px] leading-relaxed">
+                Desainer Produk & Pengembang Web. Membantu bisnis tumbuh melalui desain digital yang luar biasa.
+            </p>
+        </header>
+
+        <!-- Daftar Tautan -->
+        <div class="w-full flex flex-col gap-4 mb-10">
+
+            <!-- Tautan 1: Portofolio -->
+            <a href="#"
+                class="link-card animate-fade-in-up delay-100 group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-briefcase text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-gray-800 dark:text-gray-100">Portofolio Pribadi</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Lihat hasil karya terbaru saya</span>
+                    </div>
+                </div>
+                <i
+                    class="fa-solid fa-chevron-right text-gray-300 dark:text-gray-600 group-hover:text-blue-500 transition-colors"></i>
+            </a>
+
+            <!-- Tautan 2: LinkedIn -->
+            <a href="#"
+                class="link-card animate-fade-in-up delay-200 group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-[#0077b5]/10 flex items-center justify-center text-[#0077b5] group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-linkedin-in text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-gray-800 dark:text-gray-100">LinkedIn</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Mari terhubung secara profesional</span>
+                    </div>
+                </div>
+                <i
+                    class="fa-solid fa-chevron-right text-gray-300 dark:text-gray-600 group-hover:text-blue-500 transition-colors"></i>
+            </a>
+
+            <!-- Tautan 3: GitHub -->
+            <a href="#"
+                class="link-card animate-fade-in-up delay-300 group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:border-gray-900 dark:hover:border-gray-300 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-800 dark:text-white group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-github text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-gray-800 dark:text-gray-100">GitHub</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Kode dan proyek open source</span>
+                    </div>
+                </div>
+                <i
+                    class="fa-solid fa-chevron-right text-gray-300 dark:text-gray-600 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"></i>
+            </a>
+
+            <!-- Tautan 4: WhatsApp/Kontak -->
+            <a href="#"
+                class="link-card animate-fade-in-up delay-400 group flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:border-green-500 dark:hover:border-green-400 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-semibold text-gray-800 dark:text-gray-100">Hubungi Saya</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">Konsultasi via WhatsApp</span>
+                    </div>
+                </div>
+                <i
+                    class="fa-solid fa-chevron-right text-gray-300 dark:text-gray-600 group-hover:text-green-500 transition-colors"></i>
+            </a>
+
+        </div>
+
+        <!-- Ikon Media Sosial (Bawah) -->
+        <div class="flex gap-6 animate-fade-in-up delay-500 mb-8">
+            <a href="#"
+                class="text-gray-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110"
+                aria-label="Instagram">
+                <i class="fa-brands fa-instagram text-2xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors transform hover:scale-110"
+                aria-label="Twitter">
+                <i class="fa-brands fa-twitter text-2xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors transform hover:scale-110"
+                aria-label="Facebook">
+                <i class="fa-brands fa-facebook text-2xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-red-500 transition-colors transform hover:scale-110"
+                aria-label="YouTube">
+                <i class="fa-brands fa-youtube text-2xl"></i>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto text-center text-xs text-gray-400 animate-fade-in-up delay-500">
+            <p>&copy; <span id="year"></span> Budi Santoso. Dibuat dengan <i
+                    class="fa-solid fa-heart text-red-500 mx-1"></i></p>
+        </footer>
+
+    </main>
+
+    <!-- Toast Notifikasi (Untuk info copy link) -->
+    <div id="toast">Tautan berhasil disalin!</div>
+
+    <!-- Script Logika -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Mengatur Tahun di Footer secara otomatis
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // 2. Logika Mode Gelap / Terang (Dark/Light Mode)
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const htmlElement = document.documentElement;
+
+            // Cek preferensi tema sebelumnya dari localStorage atau sistem
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+
+            // Event listener tombol tema
+            themeToggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.theme = 'dark';
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    localStorage.theme = 'light';
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                }
+            });
+
+            // 3. Logika Tombol Bagikan (Share)
+            const shareBtn = document.getElementById('share-btn');
+            const toast = document.getElementById('toast');
+
+            function showToast(message) {
+                toast.textContent = message;
+                toast.className = "show";
+                setTimeout(function () {
+                    toast.className = toast.className.replace("show", "");
+                }, 3000);
+            }
+
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: 'Profil Budi Santoso',
+                    text: 'Lihat portofolio dan tautan profesional saya!',
+                    url: window.location.href
+                };
+
+                // Jika browser mendukung Web Share API (Biasanya di HP)
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                        console.log('Berhasil dibagikan');
+                    } catch (err) {
+                        console.log('Error saat membagikan:', err);
+                    }
+                } else {
+                    // Fallback: Salin tautan ke clipboard (Untuk Desktop)
+                    try {
+                        // Menggunakan execCommand sebagai fallback lama karena writeText kadang diblokir di iframe
+                        const tempInput = document.createElement("input");
+                        tempInput.value = window.location.href;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(tempInput);
+                        showToast('Tautan berhasil disalin ke clipboard!');
+                    } catch (err) {
+                        showToast('Gagal menyalin tautan.');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

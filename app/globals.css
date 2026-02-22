@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* stylelint-disable-next-line css-unknownAtrules */
+@variant dark (&:where(.dark, .dark *));
+
+/* stylelint-disable-next-line css-unknownAtrules */
+@theme {
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Base custom styles from original template */
+body {
+  font-family: var(--font-sans);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* We will manage link-card opacity via GSAP, but keep a fallback */
+.link-card-hidden {
+  opacity: 0;
+}
