@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 export default function ThemeShareButtons() {
     const [isDark, setIsDark] = useState(false);
     const [toastMsg, setToastMsg] = useState("");
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         if (
             localStorage.theme === "dark" ||
             (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
@@ -60,19 +62,21 @@ export default function ThemeShareButtons() {
 
     return (
         <>
-            <div className="absolute top-6 right-6 flex gap-3 z-10">
-                <button
-                    onClick={toggleTheme}
-                    aria-label="Toggle Theme"
-                    className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </button>
+            <div className="fixed top-4 right-4 md:top-6 md:right-6 flex items-center gap-1 p-1 z-50 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-sm">
+                {mounted && (
+                    <button
+                        onClick={toggleTheme}
+                        aria-label="Toggle Theme"
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                    </button>
+                )}
 
                 <button
                     onClick={handleShare}
                     aria-label="Share Profile"
-                    className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <Share className="w-5 h-5" />
                 </button>

@@ -34,3 +34,10 @@ body {
 .link-card-hidden {
   opacity: 0;
 }
+
+/* Hide elements before GSAP initializes to prevent hydration flash */
+.animate-header,
+.link-card-anim,
+.animate-bottom {
+  visibility: hidden;
+}

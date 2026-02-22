@@ -3,7 +3,25 @@ import ThemeShareButtons from "@/components/ThemeShareButtons";
 import GsapWrapper from "@/components/GsapWrapper";
 import LinkCard from "@/components/LinkCard";
 import { createClient } from "@/lib/supabase/server";
-import { Instagram, Twitter, Facebook, Youtube, Github, Link2 } from "lucide-react";
+import {
+  Instagram,
+  Twitter,
+  Facebook,
+  Youtube,
+  Github,
+  Link2,
+  Linkedin,
+  MessageCircle,
+  Music2,
+  MessageSquare,
+  Send,
+  Twitch,
+  Dribbble,
+  Figma,
+  Gitlab,
+  Slack,
+  BookOpen
+} from "lucide-react";
 
 export const revalidate = 60; // revalidate every 60s
 
@@ -49,13 +67,26 @@ async function getProfileData() {
 
 const SocialIconComponent = ({ platform, url }: { platform: string, url: string }) => {
   const p = platform.toLowerCase();
-  if (p.includes('instagram')) return <a href={url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-500 dark:hover:text-pink-400 transition-colors transform hover:scale-110" aria-label={platform}><Instagram className="w-6 h-6" /></a>;
-  if (p.includes('twitter')) return <a href={url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors transform hover:scale-110" aria-label={platform}><Twitter className="w-6 h-6" /></a>;
-  if (p.includes('facebook')) return <a href={url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors transform hover:scale-110" aria-label={platform}><Facebook className="w-6 h-6" /></a>;
-  if (p.includes('youtube')) return <a href={url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 transition-colors transform hover:scale-110" aria-label={platform}><Youtube className="w-6 h-6" /></a>;
-  if (p.includes('github')) return <a href={url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors transform hover:scale-110" aria-label={platform}><Github className="w-6 h-6" /></a>;
+  const baseClasses = "text-gray-400 transition-colors transform hover:scale-110";
 
-  return <a href={url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-600 transition-colors transform hover:scale-110" aria-label={platform}><Link2 className="w-6 h-6" /></a>;
+  if (p.includes('instagram')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-pink-500 dark:hover:text-pink-400`} aria-label={platform}><Instagram className="w-6 h-6" /></a>;
+  if (p.includes('twitter') || p.includes('x.com')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-blue-400`} aria-label={platform}><Twitter className="w-6 h-6" /></a>;
+  if (p.includes('facebook')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-blue-600`} aria-label={platform}><Facebook className="w-6 h-6" /></a>;
+  if (p.includes('youtube')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-red-500`} aria-label={platform}><Youtube className="w-6 h-6" /></a>;
+  if (p.includes('github')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-gray-900 dark:hover:text-white`} aria-label={platform}><Github className="w-6 h-6" /></a>;
+  if (p.includes('linkedin')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-blue-700 dark:hover:text-blue-500`} aria-label={platform}><Linkedin className="w-6 h-6" /></a>;
+  if (p.includes('whatsapp')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-green-500`} aria-label={platform}><MessageCircle className="w-6 h-6" /></a>;
+  if (p.includes('tiktok')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-black dark:hover:text-white`} aria-label={platform}><Music2 className="w-6 h-6" /></a>;
+  if (p.includes('discord')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#5865F2]`} aria-label={platform}><MessageSquare className="w-6 h-6" /></a>;
+  if (p.includes('telegram')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#0088cc]`} aria-label={platform}><Send className="w-6 h-6" /></a>;
+  if (p.includes('twitch')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#9146FF]`} aria-label={platform}><Twitch className="w-6 h-6" /></a>;
+  if (p.includes('dribbble')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#ea4c89]`} aria-label={platform}><Dribbble className="w-6 h-6" /></a>;
+  if (p.includes('figma')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#F24E1E]`} aria-label={platform}><Figma className="w-6 h-6" /></a>;
+  if (p.includes('gitlab')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#FCA121]`} aria-label={platform}><Gitlab className="w-6 h-6" /></a>;
+  if (p.includes('slack')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-[#E01E5A]`} aria-label={platform}><Slack className="w-6 h-6" /></a>;
+  if (p.includes('medium')) return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-black dark:hover:text-white`} aria-label={platform}><BookOpen className="w-6 h-6" /></a>;
+
+  return <a href={url} target="_blank" rel="noopener noreferrer" className={`${baseClasses} hover:text-gray-600 dark:hover:text-gray-300`} aria-label={platform}><Link2 className="w-6 h-6" /></a>;
 };
 
 export default async function Home() {
@@ -104,7 +135,7 @@ export default async function Home() {
         {/* Footer */}
         <footer className="animate-bottom mt-auto pb-4 text-center text-xs text-gray-400">
           <p>
-            &copy; {currentYear} {profile.full_name}. Dibuat dengan <span className="text-red-500 mx-1 animate-pulse inline-block">❤️</span>
+            &copy; {currentYear} {profile.full_name}.
           </p>
         </footer>
       </GsapWrapper>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,21 +12,21 @@ if (typeof window !== "undefined") {
 export default function GsapWrapper({ children }: { children: React.ReactNode }) {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             // We use GSAP timeline for entrance to stagger everything beautifully
             const tl = gsap.timeline();
 
             tl.fromTo(
                 ".animate-header",
-                { opacity: 0, y: 40 },
-                { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.7)" }
+                { autoAlpha: 0, y: 40 },
+                { autoAlpha: 1, y: 0, duration: 0.8, ease: "back.out(1.7)" }
             )
                 .fromTo(
                     ".link-card-anim",
-                    { opacity: 0, x: -30 },
+                    { autoAlpha: 0, x: -30 },
                     {
-                        opacity: 1,
+                        autoAlpha: 1,
                         x: 0,
                         duration: 0.5,
                         stagger: 0.1,
@@ -36,8 +36,8 @@ export default function GsapWrapper({ children }: { children: React.ReactNode })
                 )
                 .fromTo(
                     ".animate-bottom",
-                    { opacity: 0, y: 20 },
-                    { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" },
+                    { autoAlpha: 0, y: 20 },
+                    { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" },
                     "-=0.2"
                 );
 
