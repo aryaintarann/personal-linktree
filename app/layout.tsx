@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tautan Profil Pribadi",
-  description: "Linktree clone profil pribadi dinamis.",
+  title: "Arya Intaran - Link",
+  description: "Arya Intaran - Link",
 };
 
 export default function RootLayout({
